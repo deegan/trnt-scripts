@@ -3,6 +3,9 @@
 # checks for no-srt files in movie/tv folders
 # and makes an attempt at downloading a srt.
 #
+# Best use case for this is in crontab. Just let it do it's thing.
+# You'll need periscope for this.
+#
 # - hakan@monkii.net
 export PATH=$PATH:/home/htpc/bin/
 
