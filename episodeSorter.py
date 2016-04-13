@@ -121,6 +121,7 @@ if (ShowName is not None and Season is not None and Episode is not None):
         epid = getEpisode(checkfile)
         if ( epid == Episode ):
             episodeExists = "1"
+	    matchedEpisode = checkfile
     if (episodeExists == "0"):
         print("No match for "+ bcolors.OKBLUE + filename + bcolors.ENDC + " in " + dst)
         print(bcolors.OKGREEN + "episodeExists: " + bcolors.ENDC + episodeExists)
@@ -130,7 +131,7 @@ if (ShowName is not None and Season is not None and Episode is not None):
         fullpath = dst+filename
         subprocess.call(["/home/htpc/bin/unpack.sh", fullpath, "1"])
     else:
-        print("Found a match: " + bcolors.OKBLUE + filename + bcolors.ENDC + " -> " + bcolors.WARNING + checkfile + bcolors.ENDC)
+        print("Found a match: " + bcolors.OKBLUE + filename + bcolors.ENDC + " -> " + bcolors.WARNING + matchedEpisode + bcolors.ENDC)
         print(bcolors.FAIL + "episodeExists: " + bcolors.ENDC + episodeExists)
 elif (ShowName is not None and Movie is not None and Season is None and Episode is None):
     dst = dstMovie
