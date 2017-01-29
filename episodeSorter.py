@@ -120,18 +120,26 @@ Season          = getSeason(filename)
 Episode         = getEpisode(filename)
 Movie           = getMovie(filename)
 
+# If the functions declared earlier to fetch Season and Episode return anything
+# other than a None type, we are dealing with a Tv-Show.
 if (ShowName is not None and Season is not None and Episode is not None):
     dstTv = dstTv+ShowName+"/Season "+re.sub("^0+","",Season+"/")
     dst = dstTv
+# If the ShowName does not exist under our tv-root, we create it.
     if not os.path.exists(dstTv+ShowName):
         os.makedirs(dstTv+ShowName)
+# If the Season does not exist we create it.
     if not os.path.exists(dst):
         os.makedirs(dst)
+# Loop through all possible directories under tv-root/ShowName/Season to see if
+# we already have a matching episode in our library.
     for checkfile in os.listdir(dst):
         epid = getEpisode(checkfile)
+# If we happen to stumble on a duplicate Episode we set episodeExists=1
         if ( epid == Episode ):
             episodeExists = "1"
-	    matchedEpisode = checkfile
+            matchedEpisode = checkfile
+# Otherwise, continue copying Episode to Season dir.
     if (episodeExists == "0"):
         print("No match for "+ bcolors.OKBLUE + filename + bcolors.ENDC + " in " + dst)
         print(bcolors.OKGREEN + "episodeExists: " + bcolors.ENDC + episodeExists)
@@ -143,6 +151,8 @@ if (ShowName is not None and Season is not None and Episode is not None):
     else:
         print("Found a match: " + bcolors.OKBLUE + filename + bcolors.ENDC + " -> " + bcolors.WARNING + matchedEpisode + bcolors.ENDC)
         print(bcolors.FAIL + "episodeExists: " + bcolors.ENDC + episodeExists)
+# If Season and Episode return None and Movie does not return a None value we
+# are dealing with a Movie.
 elif (ShowName is not None and Movie is not None and Season is None and Episode is None):
     dst = dstMovie
     listing = os.listdir(dst)
@@ -161,6 +171,7 @@ elif (ShowName is not None and Movie is not None and Season is None and Episode 
     else:
         print("Found a match: " + bcolors.OKBLUE + filename + bcolors.ENDC + " -> " + bcolors.WARNING + movieExistName + bcolors.ENDC)
         print(bcolors.FAIL + "movieExists: " + bcolors.ENDC + movieExists)
+# Otherwise, something went terribly wrong. Time to start debugging?
 else:
     print(bcolors.FAIL + "Zero freaking matches son! Get your head out of your ass.." + bcolors.ENDC)
     print(bcolors.WARNING + "sys.argv[1] -> " + sys.argv[1] + bcolors.ENDC)
