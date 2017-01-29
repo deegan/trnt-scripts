@@ -30,6 +30,11 @@ dst = ""
 dstTv = "/mnt/drives/mnt3/tv/"
 # dstMovie = where you keep your movies, again no multi-tier crap.
 dstMovie = "/mnt/drives/mnt2/movies/"
+# system variables.
+# filename        = str(sys.argv[1])
+# sanity check variables.
+episodeExists   = "0"
+movieExists     = "0"
 
 # start fancy stuff.
 class bcolors:
@@ -48,6 +53,14 @@ class bcolors:
         self.FAIL = ''
         self.ENDC = ''
 # end fancy stuff.
+
+if len(sys.argv) > 1:
+    filename = str(sys.argv[1])
+else:
+    print(bcolors.FAIL + "ERROR: You need to supply a directory.")
+    print(bcolors.HEADER + "USAGE: episodeSorter.py <directory>" + bcolors.ENDC)
+#    raise Exception('Incorrect data')
+
 
 # start functions to grab information from input.
 # This function grabs the Episode number NN.
@@ -102,9 +115,6 @@ def copyEpisode(src, dst):
 # end functions.
 
 # for filename in os.listdir(src):
-filename        = str(sys.argv[1])
-episodeExists   = "0"
-movieExists     = "0"
 ShowName        = getShowName(filename)
 Season          = getSeason(filename)
 Episode         = getEpisode(filename)
