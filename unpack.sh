@@ -10,6 +10,7 @@ USAGE="Usage: unpack.sh <directory>"
 FILTER="1080p|720p|xvid|episode|dvdrip"
 SINGLE="0"
 PACKFILTER="Trilogy|Duology|PACK|Pack"
+REPACK_FILTER="Repack|REPACK|repack"
 IS_PACK="0"
 echo "Filter: $FILTER"
 
@@ -17,7 +18,7 @@ echo "Filter: $FILTER"
 if [ "$1" ]; then
     tree="$1"
     echo "Tree: [$tree]"
-    res=$(echo $tree|egrep $PACKFILTER)
+    res=$(echo $tree|egrep -v $REPACK_FILTER|egrep $PACKFILTER)
     if [ $? -eq 0 ]; then
         IS_PACK="1"
     fi
