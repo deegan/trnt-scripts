@@ -36,6 +36,34 @@ if [ "$2" ]; then
     SINGLE=1
 fi
 
+# Defining funtions.
+# Function subextract.
+# tries to locate any pre-existing subs in any given folder and unpack that.
+function subextract {
+    movieDir=$1
+    subsDir="$movieDir/Subs"
+    
+    if [ $subsDir ]; then
+        echo "Entering $subsDir.."
+        cd $subsDir
+        rar=`ls *.rar`
+        if [ $rar ]; then
+            echo "Found subs rar. $rar"
+            unrar yx $rar $movieDir
+            rar_in_rar=`ls $movieDir/*.rar`
+            if [ $rar_in_rar ]; then
+                echo "We unpacked another rar.."
+                cd $movieDir
+                unrar ye $rar_in_rar
+            fi
+        else
+            echo "Non rar found in $subsDir"
+        fi
+    else
+        echo "No subs dir found, exiting."
+    fi
+}
+
 # let's enter the root of our directory tree.
 # this should be 1 step up from wherever your rar-files are.
 # ie: /path/movies/, not /path/movies/mymovie
@@ -60,8 +88,9 @@ if [ $SINGLE == "1" ]; then
             if [ $? -eq 0 ]; then
                 echo "Deleting rar's.. [$FILE]"
                 rm *.rar *.r[0-9][0-9] 
-                rm -rf Sample/
+                rm -rf Sample/ Proof/
                 # Subtitles.
+                subextract $i
                 MKV=`ls -u *.mkv|head -1 2> /dev/null`
                 echo "Attempting to download subs.. [$1/$MKV]"
                 if [ -f $MKV ]; then
@@ -83,8 +112,9 @@ if [ $SINGLE == "1" ]; then
         if [ $? -eq 0 ]; then
             echo "Deleting rar's.. [$FILE]"
             rm *.rar *.r[0-9][0-9] 
-            rm -rf Sample/
+            rm -rf Sample/ Proof/
             # Subtitles.
+            subextract $i
             MKV=`ls -u *.mkv|head -1 2> /dev/null`
             echo "Attempting to download subs.. [$1/$MKV]"
             if [ -f $MKV ]; then
@@ -118,9 +148,10 @@ else
                     if [ $? -eq 0 ]; then
                         echo "Deleting rar's.. [$FILE]"
                         rm *.rar *.r[0-9][0-9] 
-                        rm -rf Sample/
+                        rm -rf Sample/ Proof/
                         rm currently-unpackning
                         # Subtitles.
+                        subextract $i
                         MKV=`ls -u *.mkv|head -1 2> /dev/null`
                         echo "Attempting to download subs.. [$1/$MKV]"
                         if [ -f $MKV ]; then
