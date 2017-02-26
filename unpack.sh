@@ -90,7 +90,8 @@ if [ $SINGLE == "1" ]; then
                 rm *.rar *.r[0-9][0-9] 
                 rm -rf Sample/ Proof/
                 # Subtitles.
-                subextract $i
+                subextract $dir
+                cd $dir
                 MKV=`ls -u *.mkv|head -1 2> /dev/null`
                 echo "Attempting to download subs.. [$1/$MKV]"
                 if [ -f $MKV ]; then
@@ -115,6 +116,7 @@ if [ $SINGLE == "1" ]; then
             rm -rf Sample/ Proof/
             # Subtitles.
             subextract $i
+            cd $i
             MKV=`ls -u *.mkv|head -1 2> /dev/null`
             echo "Attempting to download subs.. [$1/$MKV]"
             if [ -f $MKV ]; then
@@ -152,6 +154,7 @@ else
                         rm currently-unpackning
                         # Subtitles.
                         subextract $i
+                        cd $i
                         MKV=`ls -u *.mkv|head -1 2> /dev/null`
                         echo "Attempting to download subs.. [$1/$MKV]"
                         if [ -f $MKV ]; then
