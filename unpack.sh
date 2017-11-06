@@ -7,7 +7,7 @@
 #
 export IFS=$'\n'
 USAGE="Usage: unpack.sh <directory>"
-FILTER="1080p|720p|xvid|episode|dvdrip"
+FILTER="1080p|720p|xvid|episode|dvdrip|UFC"
 SINGLE="0"
 PACKFILTER="Trilogy|Duology|PACK|Pack"
 REPACK_FILTER="Repack|REPACK|repack"

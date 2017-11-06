@@ -30,6 +30,8 @@ dst = ""
 dstTv = "/mnt/drives/mnt3/tv/"
 # dstMovie = where you keep your movies, again no multi-tier crap.
 dstMovie = "/mnt/drives/mnt2/movies/"
+# Like fighting? no? 
+dstUFC = "/mnt/drives/mnt3/ufc/"
 # system variables.
 # filename        = str(sys.argv[1])
 # sanity check variables.
@@ -103,6 +105,12 @@ def getMovie(filename):
     if match:
         return match.group(1)
 
+# This filters on UFC events.
+def getUFC(filename):
+    match = re.search(r'(?ix)(^UFC\.[\d]{3})', filename)
+    if match:
+        return match.group(1)
+
 # This function will copy the src to dst.
 def copyEpisode(src, dst):
     try:
@@ -119,6 +127,7 @@ ShowName        = getShowName(filename)
 Season          = getSeason(filename)
 Episode         = getEpisode(filename)
 Movie           = getMovie(filename)
+UFC             = getUFC(filename)
 
 # If the functions declared earlier to fetch Season and Episode return anything
 # other than a None type, we are dealing with a Tv-Show.
@@ -171,6 +180,11 @@ elif (ShowName is not None and Movie is not None and Season is None and Episode 
     else:
         print("Found a match: " + bcolors.OKBLUE + filename + bcolors.ENDC + " -> " + bcolors.WARNING + movieExistName + bcolors.ENDC)
         print(bcolors.FAIL + "movieExists: " + bcolors.ENDC + movieExists)
+# If we have a UFC event.
+elif (UFC is not None):
+    fullpath = dstUFC+filename
+    copyEpisode(src+filename,fullpath)
+    subprocess.call(["/home/htpc/bin/unpack.sh", fullpath, "1"]) 
 # Otherwise, something went terribly wrong. Time to start debugging?
 else:
     print(bcolors.FAIL + "Zero freaking matches son! Get your head out of your ass.." + bcolors.ENDC)
