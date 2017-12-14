@@ -10,3 +10,5 @@ system.method.set_key = event.download.finished,execute=~/bin/episodeSorter.py,$
 * argparser instead of variables in code.
 * refractor some of the code that is duplicated.
 * clean up error / information messages.
+
+# poo
