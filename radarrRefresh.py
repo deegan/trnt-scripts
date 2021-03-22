@@ -1,4 +1,28 @@
 #!/usr/bin/python3
+#
+# Quick hack made because to update the path of a given movie in Radarr. If you
+# only use a blackhole solution for torrents and at the same time are not
+# using Radarr to move your finnished torrents to their final destination, you
+# will find that your "Wanted" movies will be stuck as missing forever and ever
+# until you update the path yourself, which is a manual job in the Web GUI
+# which we like to avoid.
+#
+# This script takes a single argument and that is the name of your movie as it
+# has downloaded, so My.Movie.1080p.BluRay-GROUP for example. The script is
+# best suited to be run either in your .rtorrent.rc file or wrapped in some
+# other script that does POST processing today.
+#
+# Order of operations:
+# 1) Take input, clean up the name to mostly include just the movie name.
+# 2) searchImdb for a ImdDBid.
+# 3) getRadarrID get's all movies in Radarr and we match on ImDBid and return
+#    the internal Radarr movie ID.
+# 4) refreshRadarr takes the internal radarrid + movie name and updates the
+#    path and calls for Radarr to refresh the movie so it goes from Missing to
+#    Downloaded status.
+#
+# deegan @ Discord / IRC
+# 
 import imdb
 import sys
 import re
