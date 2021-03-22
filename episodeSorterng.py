@@ -215,6 +215,7 @@ elif (category == "MOVIE"):
         fullpath = dst+filename
         srcpath = src+filename
         subprocess.call(["/home/htpc/bin/unpackng.sh", srcpath, fullpath, "1"])
+        subprocess.call(["/home/htpc/bin/radarrRefresh.py", filename])
     else:
         print("Found a match: " + bcolors.OKBLUE + filename + bcolors.ENDC + " -> " + bcolors.WARNING + movieExistName + bcolors.ENDC)
         print(bcolors.FAIL + "movieExists: " + bcolors.ENDC + movieExists)
