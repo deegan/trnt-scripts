@@ -17,7 +17,7 @@
 # 2) searchImdb for a ImdDBid.
 # 3) getRadarrID get's all movies in Radarr and we match on ImDBid and return
 #    the internal Radarr movie ID.
-# 4) refreshRadarr takes the internal radarrid + movie name and updates the
+# 4) updateRadarrID takes the internal radarrid + movie name and updates the
 #    path and calls for Radarr to refresh the movie so it goes from Missing to
 #    Downloaded status.
 #
