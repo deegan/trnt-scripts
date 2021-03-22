@@ -66,7 +66,7 @@ function subextract {
 
 # Force update of the plex library.
 function updatePlexLibrary {
-    curl -vL -H "X-Plex-Token: nLtPVZoAzmxssexbvTtT" "http://192.168.2.2:32400/library/sections/1/refresh?force=1"
+    curl -vL -H "X-Plex-Token: <TOKEN>" "http://192.168.2.2:32400/library/sections/1/refresh?force=1"
 }
 
 # let's enter the root of our directory tree.
