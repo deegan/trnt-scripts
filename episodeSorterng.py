@@ -105,10 +105,10 @@ def getSeason(filename):
         return match.group(1)
 
 # This function grabs the Episode name, Show.Name.
-def getShowName(filename):
+def getShow(filename):
     match = re.search(r'(?P<show>[\w\s.,_-]+?)\.[Ss]?(?P<season>[\d]{1,2})[XxEe]?(?P<episode>[\d]{2})', filename)
     if match:
-        return match.group(1)
+        return match
 
 # Get the movie name.
 def getMovieName(filename):
@@ -146,9 +146,10 @@ def copyEpisode(src, dst):
 
 # for filename in os.listdir(src):
 MovieName       = getMovieName(filename)
-ShowName        = getShowName(filename)
-Season          = getSeason(filename)
-Episode         = getEpisode(filename)
+Show            = getShow(filename)
+ShowName        = Show.group(1)
+Season          = Show.group(2) 
+Episode         = Show.group(3)
 Movie           = getMovie(filename)
 UFC             = getUFC(filename)
 
@@ -236,6 +237,7 @@ elif (category == "4K"):
         print(bcolors.OKBLUE + "Calling unpackng.sh..." + bcolors.ENDC)
         fullpath = dst+filename
         srcpath = src+filename
+        print("Calling unpackng.sh" + srcpath + " " + fullpath + " 1")
         subprocess.call(["/home/htpc/bin/unpackng.sh", srcpath, fullpath, "1"])
     else:
         print("Found a match: " + bcolors.OKBLUE + filename + bcolors.ENDC + " -> " + bcolors.WARNING + movieExistName + bcolors.ENDC)
